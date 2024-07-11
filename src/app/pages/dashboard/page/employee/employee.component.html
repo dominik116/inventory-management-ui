@@ -1,0 +1,34 @@
+<div class="container bg-light" *ngIf="employees.length > 0">
+    <h1>Employee Management</h1>
+  
+    <div class="employees">
+      <button class="btn btn-success mb-3" (click)="addEmployee()">Add employee</button>
+  
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>NIF</th>
+            <th>Email</th>
+            <th>Enabled</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let employee of employees">
+            <td>{{ employee.username }}</td>
+            <td>{{ employee.name }}</td>
+            <td>{{ employee.surname }}</td>
+            <td>{{ employee.nif }}</td>
+            <td>{{ employee.email }}</td>
+            <td>{{ employee.enabled }}</td>
+            <td>
+              <button class="btn btn-danger me-2" (click)="deleteEmployee(employee.id)">Delete</button>
+              <button class="btn btn-primary" (click)="modifyEmployee(employee)">Modify</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>

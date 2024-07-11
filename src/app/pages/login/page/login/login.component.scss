@@ -1,0 +1,19 @@
+.container_login { 
+	width: 100%;
+	height:100vh;
+	background: linear-gradient(to bottom right, rgb(241, 241, 241), rgb(90, 180, 54));
+}
+
+.login {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -150px 0 0 -150px;
+	width:400px;
+	min-height:350px;
+	padding: 20px;
+	border: 10px double;
+	border-color: white black black white;
+	border-radius: 10%;
+}
+.login h1 { color: #000000; text-shadow: 0 0 10px rgba(0,0,0,0.3); letter-spacing:1px; text-align:center; }

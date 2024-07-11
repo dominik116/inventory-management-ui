@@ -1,0 +1,43 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{edit ? 'Edit' : 'Create'}} article</h4>
+    <button class="btn-close" (click)="modal.dismiss('cross click')"></button>
+</div>
+
+
+<div class="modal-body">
+    <form novalidate [formGroup]="form" class="needs-validation">
+        <label for="ean" class="form-label">EAN</label>
+        <input type="text" id="ean" formControlName="ean" class="form-control" [ngClass]="{'is-invalid': (form.get('ean')?.invalid && (form.get('ean')?.dirty || form.get('ean')?.touched)) || (submit && form.get('ean')?.invalid)}">
+        <div *ngIf="(form.get('ean')?.invalid && (form.get('ean')?.dirty || form.get('ean')?.touched)) || (submit && form.get('ean')?.invalid)"
+            class="invalid-feedback">
+            <div *ngIf="form.get('ean')?.errors?.['required']">Field cannot be empty.</div>
+        </div>
+
+        <label for="name" class="form-label">Article Name</label>
+        <input type="text" id="name" formControlName="name" class="form-control" [ngClass]="{'is-invalid': (form.get('name')?.invalid && (form.get('name')?.dirty || form.get('name')?.touched)) || (submit && form.get('name')?.invalid)}">
+        <div *ngIf="(form.get('name')?.invalid && (form.get('name')?.dirty || form.get('name')?.touched)) || (submit && form.get('name')?.invalid)"
+            class="invalid-feedback">
+            <div *ngIf="form.get('name')?.errors?.['required']">Field cannot be empty.</div>
+        </div>
+
+        <label for="description" class="form-label">Description</label>
+        <input type="text" id="description" formControlName="description" class="form-control">
+    
+
+        <label for="quantity" class="form-label">Quantity</label>
+        <input type="number" min="0" id="quantity" formControlName="quantity" class="form-control"
+            [ngClass]="{'is-invalid': (form.get('quantity')?.invalid && (form.get('quantity')?.dirty || form.get('quantity')?.touched)) || (submit && form.get('quantity')?.invalid)}">
+        <div *ngIf="(form.get('quantity')?.invalid && (form.get('quantity')?.dirty || form.get('quantity')?.touched)) || (submit && form.get('quantity')?.invalid)"
+            class="invalid-feedback">
+            <div *ngIf="form.get('quantity')?.errors?.['pattern']">Invalid format.</div>
+        </div>
+
+        <label for="price" class="form-label">Price</label>
+        <input type="number" min="0" id="price" formControlName="price" class="form-control">
+    </form>
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-outline-secondary mt-3" (click)="modal.dismiss('cancel click')">Cancel</button>
+    <button class="btn btn-primary mt-3" (click)="addArticle()">{{edit ? 'Edit' : 'Create'}} Article</button>
+</div>

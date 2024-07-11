@@ -1,0 +1,15 @@
+<div class="container bg-light" *ngIf="articles.length > 0">
+  <div>
+    <h1>Inventory Management</h1>
+  </div>
+  
+    <div class="articles mt-10">
+      <button class="btn btn-success mb-3" (click)="addArticle()">Create article</button>
+      <app-table [headers]="headers" [data]="articles || []">
+        <ng-template let-item>
+          <button class="btn btn-danger me-2" (click)="deleteArticle(item)">Delete</button>
+          <button class="btn btn-primary" (click)="modifyArticle(item)">Modify</button>
+        </ng-template>
+      </app-table>
+    </div>
+  </div>
