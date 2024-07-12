@@ -6,6 +6,8 @@ import { Injectable } from '@angular/core';
 })
 export class BaseService {
 
+  url = 'http://localhost:8080/inventory-management';
+
   httpOptions: any = {
     headers: new HttpHeaders()
   };
@@ -17,20 +19,24 @@ export class BaseService {
       )
    }
 
-   get(path: string, url: string = 'http://localhost:8080/inventory-management') {
-    return this.http.get(`${url}${path}`, this.httpOptions);
+   get(path: string) {
+    return this.http.get(`${this.url}${path}`, this.httpOptions);
    }
 
-   getPaginated(path: string, params: any, url: string = 'http://localhost:8080/inventory-management') {
+   getPaginated(path: string, params: any) {
     let localParams = new HttpParams();
     Object.entries(params).forEach(([key, value]) => {
       if (value !== null) {
         localParams = localParams.append(key, value as any);
       }
     })
-    return this.http.get(`${url}${path}`, {
+    return this.http.get(`${this.url}${path}`, {
       headers: this.httpOptions.headers,
       params: localParams
     });
+   }
+
+   post(path: string, params = {}) {
+    return this.http.post(`${this.url}${path}`, params, this.httpOptions);
    }
 }
