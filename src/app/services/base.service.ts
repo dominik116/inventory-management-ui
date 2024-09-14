@@ -39,4 +39,24 @@ export class BaseService {
    post(path: string, params = {}) {
     return this.http.post(`${this.url}${path}`, params, this.httpOptions);
    }
+
+   putWithParams(path: string, params = {}, queryParams: any) {
+    let localParams = new HttpParams();
+    Object.entries(queryParams).forEach(([key, value]) => {
+      if (value !== null) {
+        localParams = localParams.append(key, value as any);
+      }
+    })
+    const httpOptionLocal = {...this.httpOptions};
+    httpOptionLocal.params = localParams;
+    return this.http.put(`${this.url}${path}`, params, httpOptionLocal);
+   }
+
+   put(path: string, params = {}) {
+    return this.http.put(`${this.url}${path}`, params, this.httpOptions);
+   }
+
+   delete(path: string) {
+    return this.http.delete(`${this.url}${path}`, this.httpOptions);
+   }
 }

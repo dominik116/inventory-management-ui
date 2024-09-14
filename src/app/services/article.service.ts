@@ -15,16 +15,15 @@ export class ArticleService extends BaseService {
     return this.getPaginated('/articles', pagination);
   }
 
-  // addArticle(article: any): void {
-  //   this.articles.push(article);
-  // }
+  addArticle(article: any) {
+    return this.post('/articles', article);
+  }
 
-  // updateArticle(ean: string, updatedArticle: any): void {
-  //   const index = this.articles.findIndex(article => article?.ean === ean);
-  //   if (index) this.articles[index] = updatedArticle;
-  // }
+  updateArticle(id: any, updatedArticle: any) {
+    return this.put(`/articles/${id}`, updatedArticle);
+  }
 
-  // deleteArticle(ean: string): void {
-  //   this.articles = this.articles.filter(article => article.ean !== ean);
-  // }
+  deleteArticle(id: string) {
+    return this.delete(`/articles/${id}`);
+  }
 }

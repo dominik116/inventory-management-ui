@@ -29,12 +29,16 @@ export class ModalAddArticleComponent implements OnInit {
     this.submit = true;
     if (this.form.invalid) return ;
     const params = {...this.form.getRawValue()};
+    if (this.article?.id) {
+      params.id = this.article.id;
+      params.idLocal = this.article.idLocal;
+    }
     this.modal.close(params);
   }
   
   buildForm() {
     this.form = new FormGroup({
-      ean: new FormControl({value: this.article?.ean || null, disabled:this.edit}, Validators.required),
+      EAN: new FormControl({value: this.article?.EAN || null, disabled:this.edit}, Validators.required),
       name: new FormControl(this.article?.name || null, Validators.required),
       description: new FormControl(this.article?.description || null),
       quantity: new FormControl(this.article?.quantity || 0, Validators.pattern('^[0-9]*$')),

@@ -7,10 +7,10 @@
 <div class="modal-body">
     <form novalidate [formGroup]="form" class="needs-validation">
         <label for="ean" class="form-label">EAN</label>
-        <input type="text" id="ean" formControlName="ean" class="form-control" [ngClass]="{'is-invalid': (form.get('ean')?.invalid && (form.get('ean')?.dirty || form.get('ean')?.touched)) || (submit && form.get('ean')?.invalid)}">
-        <div *ngIf="(form.get('ean')?.invalid && (form.get('ean')?.dirty || form.get('ean')?.touched)) || (submit && form.get('ean')?.invalid)"
+        <input type="text" id="ean" formControlName="EAN" class="form-control" [ngClass]="{'is-invalid': (form.get('EAN')?.invalid && (form.get('EAN')?.dirty || form.get('EAN')?.touched)) || (submit && form.get('EAN')?.invalid)}">
+        <div *ngIf="(form.get('EAN')?.invalid && (form.get('EAN')?.dirty || form.get('EAN')?.touched)) || (submit && form.get('EAN')?.invalid)"
             class="invalid-feedback">
-            <div *ngIf="form.get('ean')?.errors?.['required']">Field cannot be empty.</div>
+            <div *ngIf="form.get('EAN')?.errors?.['required']">Field cannot be empty.</div>
         </div>
 
         <label for="name" class="form-label">Article Name</label>
