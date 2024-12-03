@@ -1,0 +1,42 @@
+.navbar {
+    background-color:#1b6a8b;
+    .navbar-nav {
+      flex-direction: row;
+      overflow-x: auto;
+      .nav-item {
+        border-right: solid 1px black;
+        min-width: fit-content;
+        padding: 10px;
+      }
+      .nav-item:last-child {
+        border-right: none;
+      }
+    }
+}
+
+.navbar-nav {
+    outline: 0;
+    font-weight: bold;
+}
+
+.nav-link {
+    color: black;
+    text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.dropdown-menu {
+  position: absolute;
+}
+
+.custom_dropdown {
+  color: black;
+  font-weight: bold;
+}
+
+::ng-deep .dropdown-menu {
+  top: 70% !important;
+  min-width: 30px !important;
+  left: -15px !important;
+}

@@ -12,14 +12,44 @@ export class EmployeeComponent implements OnInit {
 
   employees: any[] = [];
 
-  constructor(private employeeService: EmployeeService, private readonly modalService: NgbModal) {}
+  pagination: any;
+
+  SIZE_PAGE = 5;
+  
+  headers: any[] = [];
+
+  constructor(private employeeService: EmployeeService, private readonly modalService: NgbModal) {
+    this.createTableHeader();
+  }
 
   ngOnInit(): void {
     this.loadData();
   }
 
   loadData() {
-    this.employees = this.employeeService.getEmployees();
+    this.pagination = this.getPagination();
+    this.employeeService.getEmployees(this.pagination).subscribe({
+      next: (data: any) => {
+        this.employees = data?.content || [];
+        this.pagination.total = data.total;
+        this.mapData();
+       }
+    })
+  }
+
+  mapData() {
+    if (this.employees?.length > 0) {
+      this.employees.forEach((employee: any, index: number) => {
+        employee.idLocal = index + 1;
+      })
+    }
+  }
+
+  getPagination() {
+    return {
+      page: 0,
+      size: this.SIZE_PAGE
+    }
   }
 
   addEmployee(): void {
@@ -29,14 +59,16 @@ export class EmployeeComponent implements OnInit {
       size: 'lg'
     });
     modal.result.then((result: any) => {
-      this.employeeService.addEmployee(result);
-      this.loadData();
+      this.employeeService.addEmployee(result).subscribe(() => {
+        this.loadData();
+      })
     }, () => {});
   }
 
-  deleteEmployee(employeeId: string): void {
-    this.employeeService.deleteEmployee(employeeId);
-    this.loadData();
+  deleteEmployee(employee: any): void {
+    this.employeeService.deleteEmployee(employee.id).subscribe(() => {
+      this.loadData();
+    });
   }
 
   modifyEmployee(employee: any) {
@@ -45,12 +77,45 @@ export class EmployeeComponent implements OnInit {
       backdrop: true,
       size: 'lg'
     });
-    modal.componentInstance.article = employee;
+    modal.componentInstance.employee = employee;
     modal.componentInstance.edit = true;
     modal.result.then((result: any) => {
-      this.employeeService.updateEmployee(result.id, result);
-      this.loadData();
+      this.employeeService.updateEmployee(result.id, result).subscribe(() => {
+        this.loadData();
+      })
     }, () => {});
   }
 
+  createTableHeader() {
+    this.headers = [
+      {
+        key: 'Username',
+        value: 'username'
+      },
+      {
+        key: 'Name',
+        value: 'name'
+      },
+      {
+        key: 'Surname',
+        value: 'surname'
+      },
+      {
+        key: 'NIF',
+        value: 'nif'
+      },
+      {
+        key: 'Email',
+        value: 'email'
+      },
+      {
+        key: 'Enabled',
+        value: 'enabled'
+      },
+      {
+        key: 'Actions',
+        value: 'options'
+      }
+    ]
+  }
 }

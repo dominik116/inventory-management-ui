@@ -1,34 +1,18 @@
-<div class="container bg-light" *ngIf="employees.length > 0">
-    <h1>Employee Management</h1>
-  
+<div class="mx-3 bg-light" *ngIf="employees.length > 0">
+
+  <div>
+    <h3>Employee Management</h3>
+  </div>
+
     <div class="employees">
       <button class="btn btn-success mb-3" (click)="addEmployee()">Add employee</button>
-  
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Username</th>
-            <th>Name</th>
-            <th>Surname</th>
-            <th>NIF</th>
-            <th>Email</th>
-            <th>Enabled</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let employee of employees">
-            <td>{{ employee.username }}</td>
-            <td>{{ employee.name }}</td>
-            <td>{{ employee.surname }}</td>
-            <td>{{ employee.nif }}</td>
-            <td>{{ employee.email }}</td>
-            <td>{{ employee.enabled }}</td>
-            <td>
-              <button class="btn btn-danger me-2" (click)="deleteEmployee(employee.id)">Delete</button>
-              <button class="btn btn-primary" (click)="modifyEmployee(employee)">Modify</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="border border-dark rounded-3 border-2">
+      <app-table [headers]="headers" [data]="employees || []">
+        <ng-template let-item>
+          <button class="btn btn-primary me-2" (click)="modifyEmployee(item)"><i class="fa fa-pencil-square-o"></i></button>
+          <button class="btn btn-danger" (click)="deleteEmployee(item)"><i class="fa fa-trash"></i></button>
+        </ng-template>
+      </app-table>
+      </div>
     </div>
   </div>

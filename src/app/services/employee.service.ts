@@ -1,32 +1,29 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BaseService } from './base.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class EmployeeService {
-
-  private employees: any[] = [
-    { id: '1', username: 'dominik.novotny', name: 'Dominik', surname: 'Novotny', nif: 'Y2039429Q', email: 'dominik116@hotmail.es', enabled: true, password: 'Contraseña_33'},
-    { id: '2', username: 'test.test', name: 'Test', surname: 'Test', nif: 'Y0011100Q', email: 'test@test.com', enabled: false, password: 'Contraseña_33'}
-  ];
-
-  constructor() {
+export class EmployeeService extends BaseService {
+  
+  constructor(public override readonly http: HttpClient) {
+    super(http);
   }
 
-  getEmployees(): any[] {
-    return this.employees;
+  addEmployee(employee: any) {
+    return this.post('/employees', employee);
   }
 
-  addEmployee(employee: any): void {
-    this.employees.push(employee);
+  getEmployees(pagination: any) {
+    return this.getPaginated('/employees', pagination);
   }
 
-  updateEmployee(employeeId: string, updatedEmployee: any): void {
-    const index = this.employees.findIndex(employee => employee?.id === employeeId);
-    if (index) this.employees[index] = updatedEmployee;
+  updateEmployee(id: any, updatedEmployee: any) {
+    return this.put(`/employees/${id}`, updatedEmployee);
   }
 
-  deleteEmployee(employeeId: string): void {
-    this.employees = this.employees.filter(employee => employee.id !== employeeId);
+  deleteEmployee(id: string) {
+    return this.delete(`/employees/${id}`);
   }
 }

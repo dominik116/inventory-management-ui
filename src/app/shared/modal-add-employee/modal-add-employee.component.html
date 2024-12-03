@@ -6,56 +6,90 @@
 
 <div class="modal-body">
     <form novalidate [formGroup]="form" class="needs-validation">
-        <!-- <label for="username" class="form-label">Username</label>
-        <input type="text" id="username" formControlName="id" class="form-control" [ngClass]="{'is-invalid': (form.get('username')?.invalid && (form.get('username')?.dirty || form.get('username')?.touched)) || (submit && form.get('username')?.invalid)}">
-        <div *ngIf="(form.get('username')?.invalid && (form.get('username')?.dirty || form.get('username')?.touched)) || (submit && form.get('username')?.invalid)"
-            class="invalid-feedback">
-            <div *ngIf="form.get('username')?.errors?.['required']">Field cannot be empty.</div>
-        </div> -->
 
-        <label for="name" class="form-label">Name</label>
-        <input type="text" id="name" formControlName="name" class="form-control" [ngClass]="{'is-invalid': (form.get('name')?.invalid && (form.get('name')?.dirty || form.get('name')?.touched)) || (submit && form.get('name')?.invalid)}">
-        <div *ngIf="(form.get('name')?.invalid && (form.get('name')?.dirty || form.get('name')?.touched)) || (submit && form.get('name')?.invalid)"
-            class="invalid-feedback">
-            <div *ngIf="form.get('name')?.errors?.['required']">Field cannot be empty.</div>
+        <div class="row mb-3">
+            <div class="col">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" id="username" formControlName="username" class="form-control" [ngClass]="{'is-invalid': (form.get('username')?.invalid && (form.get('username')?.dirty || form.get('username')?.touched)) || (submit && form.get('username')?.invalid)}">
+                <div *ngIf="(form.get('username')?.invalid && (form.get('username')?.dirty || form.get('username')?.touched)) || (submit && form.get('username')?.invalid)"
+                    class="invalid-feedback">
+                    <div *ngIf="form.get('username')?.errors?.['required']">Field cannot be empty.</div>
+                </div>
+            </div>
         </div>
 
-        <label for="surname" class="form-label">Surname</label>
-        <input type="text" id="surname" formControlsurname="surname" class="form-control" [ngClass]="{'is-invalid': (form.get('surname')?.invalid && (form.get('surname')?.dirty || form.get('surname')?.touched)) || (submit && form.get('surname')?.invalid)}">
-        <div *ngIf="(form.get('surname')?.invalid && (form.get('surname')?.dirty || form.get('surname')?.touched)) || (submit && form.get('surname')?.invalid)"
-            class="invalid-feedback">
-            <div *ngIf="form.get('surname')?.errors?.['required']">Field cannot be empty.</div>
+        <div class="row mb-3">
+            <div class="col">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" id="name" formControlName="name" class="form-control" [ngClass]="{'is-invalid': (form.get('name')?.invalid && (form.get('name')?.dirty || form.get('name')?.touched)) || (submit && form.get('name')?.invalid)}">
+                <div *ngIf="(form.get('name')?.invalid && (form.get('name')?.dirty || form.get('name')?.touched)) || (submit && form.get('name')?.invalid)"
+                    class="invalid-feedback">
+                    <div *ngIf="form.get('name')?.errors?.['required']">Field cannot be empty.</div>
+                </div>
+            </div>
         </div>
 
-        <label for="nif" class="form-label">NIF</label>
-        <input type="text" id="nif" formControlnif="nif" class="form-control" [ngClass]="{'is-invalid': (form.get('nif')?.invalid && (form.get('nif')?.dirty || form.get('nif')?.touched)) || (submit && form.get('nif')?.invalid)}">
-        <div *ngIf="(form.get('nif')?.invalid && (form.get('nif')?.dirty || form.get('nif')?.touched)) || (submit && form.get('nif')?.invalid)"
-            class="invalid-feedback">
-            <div *ngIf="form.get('nif')?.errors?.['required']">Field cannot be empty.</div>
+        <div class="row mb-3">
+            <div class="col">
+                <label for="surname" class="form-label">Surname</label>
+                <input type="text" id="surname" formControlName="surname" class="form-control" [ngClass]="{'is-invalid': (form.get('surname')?.invalid && (form.get('surname')?.dirty || form.get('surname')?.touched)) || (submit && form.get('surname')?.invalid)}">
+                <div *ngIf="(form.get('surname')?.invalid && (form.get('surname')?.dirty || form.get('surname')?.touched)) || (submit && form.get('surname')?.invalid)"
+                    class="invalid-feedback">
+                    <div *ngIf="form.get('surname')?.errors?.['required']">Field cannot be empty.</div>
+                </div>
+            </div>
         </div>
 
-        <label for="email" class="form-label">Email</label>
-        <input type="text" id="email" formControlemail="email" class="form-control" [ngClass]="{'is-invalid': (form.get('email')?.invalid && (form.get('email')?.dirty || form.get('email')?.touched)) || (submit && form.get('email')?.invalid)}">
-        <div *ngIf="(form.get('email')?.invalid && (form.get('email')?.dirty || form.get('email')?.touched)) || (submit && form.get('email')?.invalid)"
-            class="invalid-feedback">
-            <div *ngIf="form.get('email')?.errors?.['required']">Field cannot be empty.</div>
+        <div class="row mb-3">
+            <div class="col">
+                <label for="nif" class="form-label">NIF</label>
+                <input type="text" id="nif" formControlName="nif" class="form-control" [ngClass]="{'is-invalid': (form.get('nif')?.invalid && (form.get('nif')?.dirty || form.get('nif')?.touched)) || (submit && form.get('nif')?.invalid)}">
+                <div *ngIf="(form.get('nif')?.invalid && (form.get('nif')?.dirty || form.get('nif')?.touched)) || (submit && form.get('nif')?.invalid)"
+                    class="invalid-feedback">
+                    <div *ngIf="form.get('nif')?.errors?.['required']">Field cannot be empty.</div>
+                </div>
+            </div>
         </div>
 
-        <label for="enabled" class="form-label">Enabled</label>
-        <input type="checkbox" role="switch" id="enabled" formControlenabled="enabled" class="form-control" [ngClass]="{'is-invalid': (form.get('enabled')?.invalid && (form.get('enabled')?.dirty || form.get('enabled')?.touched)) || (submit && form.get('enabled')?.invalid)}">
-        <div *ngIf="(form.get('enabled')?.invalid && (form.get('enabled')?.dirty || form.get('enabled')?.touched)) || (submit && form.get('enabled')?.invalid)"
-            class="invalid-feedback">
-            <div *ngIf="form.get('enabled')?.errors?.['required']">Field cannot be empty.</div>
+        <div class="row mb-3">
+            <div class="col">
+                <label for="email" class="form-label">Email</label>
+                <input type="text" id="email" formControlName="email" class="form-control" [ngClass]="{'is-invalid': (form.get('email')?.invalid && (form.get('email')?.dirty || form.get('email')?.touched)) || (submit && form.get('email')?.invalid)}">
+                <div *ngIf="(form.get('email')?.invalid && (form.get('email')?.dirty || form.get('email')?.touched)) || (submit && form.get('email')?.invalid)"
+                    class="invalid-feedback">
+                    <div *ngIf="form.get('email')?.errors?.['required']">Field cannot be empty.</div>
+                </div>
+            </div>
         </div>
-    
-        <label for="password" class="form-label">Password</label>
-        <input type="password" minlength="8" autocomplete="current-password" id="password" formControlName="password" class="form-control"
-            [ngClass]="{'is-invalid': (form.get('password')?.invalid && (form.get('password')?.dirty || form.get('password')?.touched)) || (submit && form.get('password')?.invalid)}">
-        <div *ngIf="(form.get('password')?.invalid && (form.get('password')?.dirty || form.get('password')?.touched)) || (submit && form.get('password')?.invalid)"
-            class="invalid-feedback">
-            <div *ngIf="form.get('password')?.errors?.['pattern']">Invalid format.</div>
+
+        
+        <div class="row mb-3">
+            <div class="col">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" minlength="8" autocomplete="current-password" id="password" formControlName="password" class="form-control"
+                [ngClass]="{'is-invalid': (form.get('password')?.invalid && (form.get('password')?.dirty || form.get('password')?.touched)) || (submit && form.get('password')?.invalid)}">
+                <div *ngIf="(form.get('password')?.invalid && (form.get('password')?.dirty || form.get('password')?.touched)) || (submit && form.get('password')?.invalid)"
+                class="invalid-feedback">
+                <div *ngIf="form.get('password')?.errors?.['pattern']">Invalid format.</div>
+            </div>
         </div>
-    </form>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col">
+            <div class="d-flex">
+                <label class="form-check-label">Enabled</label>
+                <div class="form-check form-switch ms-2">
+                    <input type="checkbox" role="switch" id="enabled" formControlName="enabled" class="form-check-input" [ngClass]="{'is-invalid': (form.get('enabled')?.invalid && (form.get('enabled')?.dirty || form.get('enabled')?.touched)) || (submit && form.get('enabled')?.invalid)}">
+                </div>
+            </div>
+            <div *ngIf="(form.get('enabled')?.invalid && (form.get('enabled')?.dirty || form.get('enabled')?.touched)) || (submit && form.get('enabled')?.invalid)"
+                class="invalid-feedback">
+                <div *ngIf="form.get('enabled')?.errors?.['required']">Field cannot be empty.</div>
+            </div>
+        </div>
+    </div>
+</form>
 </div>
 
 <div class="modal-footer">

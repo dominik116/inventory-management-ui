@@ -29,19 +29,22 @@ export class ModalAddEmployeeComponent implements OnInit {
     this.submit = true;
     if (this.form.invalid) return ;
     const params = {...this.form.getRawValue()};
+    if (this.edit) {
+      params.id = this.employee.id;
+      params.idLocal = this.employee.idLocal;
+    }
     this.modal.close(params);
   }
   
   buildForm() {
     this.form = new FormGroup({
-      id: new FormControl({value: this.employee?.id || null, disabled:this.edit}, Validators.required),
       username: new FormControl(this.employee?.username || null, Validators.required),
       name: new FormControl(this.employee?.name || null, Validators.required),
       surname: new FormControl(this.employee?.surname || null, Validators.required),
       nif: new FormControl(this.employee?.nif || null, Validators.required),
       email: new FormControl(this.employee?.email || null, Validators.required),
       enabled: new FormControl(this.employee?.enabled || false),
-      password: new FormControl(this.employee?.password || null, Validators.pattern("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/"))
+      password: new FormControl(this.employee?.password || null, [Validators.pattern(/^(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/), Validators.required])
     });
   }
 }

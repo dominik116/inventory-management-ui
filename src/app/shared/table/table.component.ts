@@ -21,14 +21,23 @@ export class TableComponent implements OnInit {
 
   page = 1;
 
+  widthHead: any;
+
   constructor() { }
 
   ngOnInit(): void {
+    if (this.headers?.length) {
+      this.calculateColumnWidth();
+    }
   }
 
   changePagination(index: number) {
     this.page = index;
     this.paginationChange.emit(this.page);
+  }
+
+  calculateColumnWidth() {
+    this.widthHead = (90/this.headers.length) + '%';
   }
 
 }

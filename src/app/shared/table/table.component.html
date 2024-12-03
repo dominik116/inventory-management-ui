@@ -2,7 +2,7 @@
     <thead>
       <tr>
         <ng-container *ngFor="let header of headers">
-            <th *ngIf="header.name !== 'options'">{{ header.key }}</th>
+            <th *ngIf="header.name !== 'options'" [style]="{width: widthHead}">{{ header.key }}</th>
             <th style="width: 10%;" *ngIf="header.name === 'options'">{{ header.key }}</th>
         </ng-container>
       </tr>
