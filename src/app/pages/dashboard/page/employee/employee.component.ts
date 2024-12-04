@@ -59,16 +59,26 @@ export class EmployeeComponent implements OnInit {
       size: 'lg'
     });
     modal.result.then((result: any) => {
-      this.employeeService.addEmployee(result).subscribe(() => {
-        this.loadData();
+      this.employeeService.addEmployee(result).subscribe({
+        next: (data: any) => {
+          this.loadData();
+        },
+        error: (err: any) => {
+          this.loadData();
+          alert(err.error.detail);
+        }
       })
     }, () => {});
   }
 
   deleteEmployee(employee: any): void {
-    this.employeeService.deleteEmployee(employee.id).subscribe(() => {
-      this.loadData();
-    });
+    const confirmation = confirm('Are you sure you want to delete this employee?');
+    if (confirmation) {
+      this.employeeService.deleteEmployee(employee.id).subscribe(() => {
+        this.loadData();
+        alert('Employee deleted successfully!');
+      });
+    }
   }
 
   modifyEmployee(employee: any) {

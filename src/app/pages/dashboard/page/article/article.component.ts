@@ -65,21 +65,25 @@ export class ArticleComponent implements OnInit {
         },
         error: (err: any) => {
           this.loadData();
-          alert(err.error.description);
+          alert(err.error.detail);
         }
       })
     }, () => {});
   }
 
   deleteArticle(article: any): void {
+    const confirmation = confirm('Are you sure you want to delete this article?');
+    if (confirmation) {
       this.articleService.deleteArticle(article.id).subscribe({
         next: () => {
           this.articles = this.articles.filter(item => article.idLocal !== item.idLocal)
+          alert('Article deleted successfully!');
         },
         error: (err: any) => {
           alert(err.error.description);
         }
       })
+    }
   }
 
   modifyArticle(article: any): void {
