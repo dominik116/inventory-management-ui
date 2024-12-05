@@ -1,29 +1,42 @@
 <div class="row">
     <div class="col">
         <nav class="navbar navbar-expand-lg">
-            <div class="d-flex justify-content-between w-100">
-                <div>
+            <div class="d-flex justify-content-between align-items-center w-100">
+                <div class="d-flex align-items-center">
                     <ul class="navbar-nav mx-auto custom_navbar">
                         <li class="nav-item">
                             <a class="nav-link" routerLink="articles" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Articles</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" *inventoryForRoles="[]">
                             <a class="nav-link" routerLink="employees" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Employees</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" routerLink="/notifications" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Notifications</a>
-                        </li>
                     </ul>
-                </div>
-                <div ngbDropdown class="d-inline-block mt-2 mx-4">
-                    <button type="button" class="btn border-0 text-decoration-none custom_dropdown" id="dropdownBasic1" ngbDropdownToggle>
-                      Dominik
-                    </button>
-                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                        <button ngbDropdownItem>My profile</button>
-                        <button ngbDropdownItem (click)="logOut()">Sign out</button>
+                    <div class="notification">
+                        <div ngbDropdown class="d-inline-block">
+                            <button type="button" class="btn border-0 text-decoration-none custom_dropdown" id="dropdownBasic1" ngbDropdownToggle>
+                                Notifications
+                                <span *ngIf="countNotifications" class="position-absolute top-0 start-70 translate-middle badge bg-danger">
+                                    {{countNotifications}}
+                                </span>
+                            </button>
+                            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                <button ngbDropdownItem (click)="createNewNotification()">Create notification <i class="fa fa-plus-circle me-1"></i></button>
+                                <button ngbDropdownItem (click)="navigateViewNotifications()">Show notifications <i class="fa fa-eye me-1"></i></button>
+                            </div>
+                        </div>
                     </div>
-                  </div>
+                </div>
+                <div class="user">
+                    <div ngbDropdown class="d-inline-block mx-4">
+                        <button type="button" class="btn border-0 text-decoration-none custom_dropdown" id="dropdownBasic2" ngbDropdownToggle>
+                          {{ user.sub }}
+                        </button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownBasic2">
+                            <button ngbDropdownItem (click)="navigateToProfile()">My profile</button>
+                            <button ngbDropdownItem (click)="logOut()">Sign out</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </nav>
     </div>

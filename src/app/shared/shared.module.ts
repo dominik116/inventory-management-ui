@@ -5,6 +5,7 @@ import { ModalAddEmployeeComponent } from './modal-add-employee/modal-add-employ
 import { TableComponent } from './table/table.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ModalAddNotificationComponent } from './modal-add-notification/modal-add-notification.component';
 
 
 
@@ -12,7 +13,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   declarations: [
     ModalAddArticleComponent,
     ModalAddEmployeeComponent,
-    TableComponent
+    TableComponent,
+    ModalAddNotificationComponent
   ],
   imports: [
     CommonModule,

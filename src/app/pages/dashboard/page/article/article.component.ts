@@ -16,6 +16,8 @@ export class ArticleComponent implements OnInit {
 
   pagination: any;
 
+  pageNumber: number = 1;
+
   headers: any[] = [];
 
   constructor(private articleService: ArticleService, private readonly modalService: NgbModal) {
@@ -23,17 +25,22 @@ export class ArticleComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.pagination = this.getPagination();
     this.loadData();
   }
 
   loadData() {
-    this.pagination = this.getPagination();
     this.articleService.getArticles(this.pagination).subscribe({
       next: (data: any) => {
         this.articles = data?.content || [];
+        this.pagination.page = data.page;
+        this.pagination.size = data.size;
         this.pagination.total = data.total;
         this.mapData();
-       }
+      },
+      error: (err: any) => {
+        alert(err.error?.detail);
+      }
     })
   }
 
@@ -52,6 +59,11 @@ export class ArticleComponent implements OnInit {
     }
   }
 
+  pageChange(page: number){
+    this.pagination.page = page - 1;
+    this.loadData();
+  }
+
   addArticle(): void {
     const modal = this.modalService.open(ModalAddArticleComponent, {
       centered: true,
@@ -60,12 +72,11 @@ export class ArticleComponent implements OnInit {
     });
     modal.result.then((result: any) => {
       this.articleService.addArticle(result).subscribe({
-        next: (data: any) => {
+        next: () => {
           this.loadData();
         },
         error: (err: any) => {
-          this.loadData();
-          alert(err.error.detail);
+          alert(err.error?.detail);
         }
       })
     }, () => {});
@@ -80,7 +91,7 @@ export class ArticleComponent implements OnInit {
           alert('Article deleted successfully!');
         },
         error: (err: any) => {
-          alert(err.error.description);
+          alert(err.error?.detail);
         }
       })
     }
@@ -96,14 +107,14 @@ export class ArticleComponent implements OnInit {
     modal.componentInstance.edit = true;
     modal.result.then((result: any) => {
       this.articleService.updateArticle(result.id, result).subscribe({
-        next: (data: any) => {
+        next: () => {
           const currentIndex = this.articles.findIndex(item => item.idLocal === result.idLocal)
           if (currentIndex > -1) {
             this.articles[currentIndex] = result;
           }
         },
         error: (err: any) => {
-          alert(err.error.description);
+          alert(err.error?.detail);
         }
       })
     }, () => {});

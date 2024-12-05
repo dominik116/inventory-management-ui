@@ -11,6 +11,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class LoginComponent implements OnInit {
 
   form: FormGroup;
+  showPass: boolean = false;
 
   submit: any;
   constructor(private readonly router: Router, private authService: AuthService) {
@@ -40,5 +41,9 @@ export class LoginComponent implements OnInit {
         }
       }
     );
+  }
+
+  toggleShowPass(){
+    this.showPass = !this.showPass;
   }
 }

@@ -37,7 +37,7 @@ export class TableComponent implements OnInit {
   }
 
   calculateColumnWidth() {
-    this.widthHead = (90/this.headers.length) + '%';
+    this.widthHead = (90 / this.headers.length) + '%';
   }
 
 }

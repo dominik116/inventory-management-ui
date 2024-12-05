@@ -1,0 +1,71 @@
+<div class="mx-3 bg-light">
+    <div class="pt-2">
+      <h3>My notifications</h3>
+    </div>
+    <div *ngIf="loading">
+        <div class="text-center mt-5">
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+    </div>
+    <div *ngIf="!loading">
+        <ng-container *ngIf="notifications; else elseBlock">
+            <div class="d-flex me-2">
+                <div class="col-sm-12 col-md-6 p-2" *ngFor="let notification of notifications">
+                    <div class="border border-secondary border-2 rounded-3">
+                        <div class="card border-0-shadow">
+                            <div class="row g-0">
+                                <div class="card-body p-0 h-100 position-relative overflow-hidden">
+                                    <ng-container>
+                                        <span *ngIf="notification?.status === 'open'" class="mark_art_header bg-success text-white position-absolute fw-600">Open</span>
+                                        <span *ngIf="notification?.status === 'closed'" class="mark_art_header bg-danger text-white position-absolute fw-600">Closed</span>
+                                    </ng-container>
+                                    <div class="card p-0 border-top-0 border-bottom-0 border-end-0 rounded-0 h-100">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-sm-12 col-md-6">
+                                                    <p class="card-text fs-5 fw-bold">{{ notification?.subject }}</p>
+                                                </div>
+                                                <div class="col-sm-12 col-md-6 text-center">
+                                                    <label class="fw-bold">{{ notification?.createdAt | date: 'dd/MM/YYYY' }}</label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col sm-12 col-md-12">
+                                                    <label class="ps-2">{{ notification?.message }}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer p-0">
+                                    <div class="row align-items-center w-100 ms-1 p-2">
+                                        <div class="col-md-6">
+                                            <label><strong>User: </strong>{{ notification?.username }}</label>
+                                        </div>
+                                        <div class="col-md-6 text-end" *ngIf="notification?.status === 'open'">
+                                            <button class="btn btn-outline-primary me-2" (click)="modifyNotification(notification)"><i class="fa fa-pencil-square-o"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row px-3 pb-3" *ngIf="pagination && pagination.total > pagination.size">
+                <div class="col">
+                    <div class="container-pagination">
+                        <ngb-pagination class="d-flex justify-content-center" [collectionSize]="pagination.total" [pageSize]="pagination.size" [(page)]="pageNumber" (pageChange)="pageChange($event)"></ngb-pagination>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+        <ng-template #elseBlock>
+            <div class="alert alert-secondary" role="alert">
+                There are no notifications.
+              </div>
+        </ng-template>
+    </div>
+</div>

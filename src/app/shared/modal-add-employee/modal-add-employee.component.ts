@@ -16,6 +16,7 @@ export class ModalAddEmployeeComponent implements OnInit {
   form!: FormGroup;
 
   submit: any;
+  showPass: boolean = false;
 
   constructor(public readonly modal: NgbActiveModal) {
 
@@ -41,10 +42,18 @@ export class ModalAddEmployeeComponent implements OnInit {
       username: new FormControl(this.employee?.username || null, Validators.required),
       name: new FormControl(this.employee?.name || null, Validators.required),
       surname: new FormControl(this.employee?.surname || null, Validators.required),
-      nif: new FormControl(this.employee?.nif || null, Validators.required),
+      nif: new FormControl(this.employee?.nif || null, [Validators.required, Validators.maxLength(9)]),
       email: new FormControl(this.employee?.email || null, Validators.required),
       enabled: new FormControl(this.employee?.enabled || false),
-      password: new FormControl(this.employee?.password || null, [Validators.pattern(/^(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/), Validators.required])
+      password: new FormControl(null, [Validators.pattern(/^(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/), Validators.required])
     });
+    if(this.edit){
+      this.form.get('password')?.removeValidators([Validators.pattern(/^(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/), Validators.required]);
+      this.form.get('password')?.updateValueAndValidity();
+    }
+  }
+
+  toggleShowPass(){
+    this.showPass = !this.showPass;
   }
 }

@@ -7,7 +7,7 @@
     <div class="employees">
       <button class="btn btn-success mb-3" (click)="addEmployee()">Add employee</button>
       <div class="border border-dark rounded-3 border-2">
-      <app-table [headers]="headers" [data]="employees || []">
+      <app-table [headers]="headers" [data]="employees || []" [pagination]="pagination" [pageSize]="pagination.size" (paginationChange)="pageChange($event)">
         <ng-template let-item>
           <button class="btn btn-primary me-2" (click)="modifyEmployee(item)"><i class="fa fa-pencil-square-o"></i></button>
           <button class="btn btn-danger" (click)="deleteEmployee(item)"><i class="fa fa-trash"></i></button>

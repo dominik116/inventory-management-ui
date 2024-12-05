@@ -6,7 +6,7 @@
     <div class="articles mt-10">
       <button class="btn btn-success mb-3" (click)="addArticle()">Create article</button>
       <div class="border border-dark rounded-3 border-2">
-        <app-table [headers]="headers" [data]="articles || []">
+        <app-table [headers]="headers" [data]="articles || []" [pagination]="pagination" [pageSize]="pagination.size" (paginationChange)="pageChange($event)">
           <ng-template let-item>
             <button class="btn btn-primary me-2" (click)="modifyArticle(item)"><i class="fa fa-pencil-square-o"></i></button>
             <button class="btn btn-danger" (click)="deleteArticle(item)"><i class="fa fa-trash"></i></button>

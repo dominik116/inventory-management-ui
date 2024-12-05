@@ -1,0 +1,41 @@
+<div class="modal-header">
+    <h4 class="modal-title">Create notification</h4>
+    <button class="btn-close" (click)="modal.dismiss('cross click')"></button>
+</div>
+
+
+<div class="modal-body">
+    <form novalidate [formGroup]="form" class="needs-validation">
+
+        <div class="row mb-3">
+            <div class="col">
+                <label class="form-label">Subject</label>
+                <input type="text" formControlName="subject" class="form-control" [ngClass]="{'is-invalid': (form.get('subject')?.invalid && (form.get('subject')?.dirty || form.get('subject')?.touched)) || (submit && form.get('subject')?.invalid)}">
+                <div *ngIf="(form.get('subject')?.invalid && (form.get('subject')?.dirty || form.get('subject')?.touched)) || (submit && form.get('subject')?.invalid)"
+                    class="invalid-feedback">
+                    <div *ngIf="form.get('subject')?.errors?.['required']">Field cannot be empty.</div>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <label class="form-label">Message</label>
+                <textarea class="form-control" formControlName="message" rows="3" maxlength="1000" 
+                    [ngClass]="{'is-invalid': (form.get('message')?.invalid && (form.get('message')?.dirty || form.get('message')?.touched)) || (submit && form.get('message')?.invalid)}">
+                </textarea>
+                <div *ngIf="form.get('message')?.value">
+                    Limit: {{ this.form.get('message')?.value?.length }} / 1000
+                </div>
+                <div *ngIf="(form.get('message')?.invalid && (form.get('message')?.dirty || form.get('message')?.touched)) || (submit && form.get('message')?.invalid)"
+                    class="invalid-feedback">
+                    <div *ngIf="form.get('message')?.errors?.['required']">Field cannot be empty.</div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-outline-secondary mt-3" (click)="modal.dismiss('cancel click')">Cancel</button>
+    <button class="btn btn-primary mt-3" (click)="addNotification()">{{ edit ? 'Edit' : 'New' }} notification</button>
+</div>

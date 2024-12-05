@@ -19,6 +19,10 @@ export class EmployeeService extends BaseService {
     return this.getPaginated('/employees', pagination);
   }
 
+  getEmployee(username: any) {
+    return this.get(`/employees/${username}`);
+  }
+
   updateEmployee(id: any, updatedEmployee: any) {
     return this.put(`/employees/${id}`, updatedEmployee);
   }

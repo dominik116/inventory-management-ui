@@ -14,11 +14,17 @@
             </div>
             <div class="mb-3 row">
                 <div class="col col-md-12">
-                    <input class="form-control" type="password" placeholder="Password" formControlName="password"
-                        [ngClass]="{'is-invalid': (form.get('password')?.invalid && (form.get('password')?.dirty || form.get('password')?.touched)) || (submit && form.get('password')?.invalid)}" />
-                    <div *ngIf="(form.get('password')?.invalid && (form.get('password')?.dirty || form.get('password')?.touched)) || (submit && form.get('password')?.invalid)"
-                        class="invalid-feedback">
-                        <div *ngIf="form.get('password')?.errors?.['required']">Field cannot be empty.</div>
+                    <div class="input-group">
+                        <input class="form-control" [type]="showPass ? 'text' : 'password'" placeholder="Password" formControlName="password"
+                            [ngClass]="{'is-invalid': (form.get('password')?.invalid && (form.get('password')?.dirty || form.get('password')?.touched)) || (submit && form.get('password')?.invalid)}" />
+                        <button class="btn btn-secondary" (click)="toggleShowPass()">
+                            <i *ngIf="showPass" class="fa fa-eye"></i>
+                            <i *ngIf="!showPass" class="fa fa-eye-slash"></i>
+                        </button>
+                        <div *ngIf="(form.get('password')?.invalid && (form.get('password')?.dirty || form.get('password')?.touched)) || (submit && form.get('password')?.invalid)"
+                            class="invalid-feedback">
+                            <div *ngIf="form.get('password')?.errors?.['required']">Field cannot be empty.</div>
+                        </div>
                     </div>
                 </div>
 

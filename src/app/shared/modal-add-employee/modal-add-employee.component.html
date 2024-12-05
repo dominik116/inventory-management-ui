@@ -47,6 +47,7 @@
                 <div *ngIf="(form.get('nif')?.invalid && (form.get('nif')?.dirty || form.get('nif')?.touched)) || (submit && form.get('nif')?.invalid)"
                     class="invalid-feedback">
                     <div *ngIf="form.get('nif')?.errors?.['required']">Field cannot be empty.</div>
+                    <div *ngIf="form.get('nif')?.value?.length > 9">Maximum of 9 digits.</div>
                 </div>
             </div>
         </div>
@@ -63,14 +64,21 @@
         </div>
 
         
-        <div class="row mb-3">
+        <div class="row mb-3" *ngIf="!edit">
             <div class="col">
                 <label for="password" class="form-label">Password</label>
-                <input type="password" minlength="8" autocomplete="current-password" id="password" formControlName="password" class="form-control"
-                [ngClass]="{'is-invalid': (form.get('password')?.invalid && (form.get('password')?.dirty || form.get('password')?.touched)) || (submit && form.get('password')?.invalid)}">
-                <div *ngIf="(form.get('password')?.invalid && (form.get('password')?.dirty || form.get('password')?.touched)) || (submit && form.get('password')?.invalid)"
-                class="invalid-feedback">
-                <div *ngIf="form.get('password')?.errors?.['pattern']">Invalid format.</div>
+                <div class="input-group">
+                    <input [type]="showPass ? 'text' : 'password'" minlength="8" autocomplete="current-password" id="password" formControlName="password" class="form-control"
+                    [ngClass]="{'is-invalid': (form.get('password')?.invalid && (form.get('password')?.dirty || form.get('password')?.touched)) || (submit && form.get('password')?.invalid)}">
+                    <button class="btn btn-secondary" (click)="toggleShowPass()">
+                        <i *ngIf="showPass" class="fa fa-eye"></i>
+                        <i *ngIf="!showPass" class="fa fa-eye-slash"></i>
+                    </button>
+                    <div *ngIf="(form.get('password')?.invalid && (form.get('password')?.dirty || form.get('password')?.touched)) || (submit && form.get('password')?.invalid)"
+                    class="invalid-feedback">
+                    <div *ngIf="form.get('password')?.errors?.['pattern']">Invalid format.</div>
+                    <div *ngIf="form.get('password')?.errors?.['required']">Field cannot be empty.</div>
+                </div>
             </div>
         </div>
     </div>

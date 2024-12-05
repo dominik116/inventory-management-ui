@@ -8,9 +8,6 @@
         min-width: fit-content;
         padding: 10px;
       }
-      .nav-item:last-child {
-        border-right: none;
-      }
     }
 }
 
@@ -35,8 +32,14 @@
   font-weight: bold;
 }
 
-::ng-deep .dropdown-menu {
-  top: 70% !important;
+::ng-deep .notification .dropdown-menu {
+  top: 80% !important;
   min-width: 30px !important;
-  left: -15px !important;
+  left: 7% !important;
+}
+
+::ng-deep .user .dropdown-menu {
+  top: 80% !important;
+  min-width: 30px !important;
+  left: 22% !important;
 }
