@@ -6,6 +6,7 @@ import { TableComponent } from './table/table.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ModalAddNotificationComponent } from './modal-add-notification/modal-add-notification.component';
+import { ModalConfirmComponent } from './modal-confirm/modal-confirm.component';
 
 
 
@@ -14,7 +15,8 @@ import { ModalAddNotificationComponent } from './modal-add-notification/modal-ad
     ModalAddArticleComponent,
     ModalAddEmployeeComponent,
     TableComponent,
-    ModalAddNotificationComponent
+    ModalAddNotificationComponent,
+    ModalConfirmComponent
   ],
   imports: [
     CommonModule,

@@ -27,7 +27,19 @@ export class NotificationService extends BaseService{
     return this.get(`/notifications/count/${username}`);
   }
 
-  updateNotification(username: string, params: any){
+  getCountNotification() {
+    return this.get('/notifications/count');
+  }
+
+  getAllNotifications(username: string, params: any) {
+    return this.getPaginated(`/notifications`, params);
+  }
+
+  updateNotification(username: string, params: any) {
     return this.put(`/notifications/${username}/message`, params);
+  }
+
+  closeNotification(idNotification: string, params: any) {
+    return this.putWithParams(`/notifications/${idNotification}`, {}, params);
   }
 }

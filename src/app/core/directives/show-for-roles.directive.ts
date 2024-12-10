@@ -7,7 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class ShowForRolesDirective {
 
-  @Input('inventoryForRoles') allowedRoles!: any[];
+  @Input('appShowForRoles') allowedRoles!: any[];
   sub!: Subscription;
 
   constructor(private readonly authService: AuthService,

@@ -11,8 +11,8 @@
     </div>
     <div *ngIf="!loading">
         <ng-container *ngIf="notifications; else elseBlock">
-            <div class="d-flex me-2">
-                <div class="col-sm-12 col-md-6 p-2" *ngFor="let notification of notifications">
+            <div class="d-flex me-2 flex-wrap">
+                <div class="col-sm-12 col-md-4 p-2" *ngFor="let notification of notifications">
                     <div class="border border-secondary border-2 rounded-3">
                         <div class="card border-0-shadow">
                             <div class="row g-0">
@@ -45,7 +45,8 @@
                                             <label><strong>User: </strong>{{ notification?.username }}</label>
                                         </div>
                                         <div class="col-md-6 text-end" *ngIf="notification?.status === 'open'">
-                                            <button class="btn btn-outline-primary me-2" (click)="modifyNotification(notification)"><i class="fa fa-pencil-square-o"></i></button>
+                                            <button title="Edit notification" class="btn btn-outline-primary me-2" (click)="modifyNotification(notification)"><i class="fa fa-pencil-square-o"></i></button>
+                                            <button *appShowForRoles="[]" title="Close notification" class="btn btn-outline-danger me-2" (click)="closeNotification(notification)"><i class="fa fa-close"></i></button>
                                         </div>
                                     </div>
                                 </div>

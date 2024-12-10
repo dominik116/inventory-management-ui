@@ -1,1 +1,11 @@
 <router-outlet></router-outlet>
+<div class="container-toast text-center p-3">
+    <ngb-toast *ngFor="let toast of utilsService.toasts" [class]="toast.classname" [autohide]="true" header="Inventory Management"
+      [delay]="toast.delay || 5000" (hidden)="utilsService.remove(toast)">
+      <ng-template [ngIf]="isTemplate(toast)" [ngIfElse]="text">
+        <ng-template [ngTemplateOutlet]="toast.textOrTpl"></ng-template>
+      </ng-template>
+  
+      <ng-template #text>{{ toast.text }}</ng-template>
+    </ngb-toast>
+</div>

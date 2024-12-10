@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { UtilsService } from 'src/app/core/services/utils.service';
 import { ArticleService } from 'src/app/services/article.service';
 import { ModalAddArticleComponent } from 'src/app/shared/modal-add-article/modal-add-article.component';
 
@@ -20,7 +21,8 @@ export class ArticleComponent implements OnInit {
 
   headers: any[] = [];
 
-  constructor(private articleService: ArticleService, private readonly modalService: NgbModal) {
+  constructor(private articleService: ArticleService, private readonly modalService: NgbModal,
+    private readonly utilsService: UtilsService) {
     this.createTableHeader();
   }
 
@@ -39,7 +41,7 @@ export class ArticleComponent implements OnInit {
         this.mapData();
       },
       error: (err: any) => {
-        alert(err.error?.detail);
+        this.utilsService.showDanger(err?.error?.detail);
       }
     })
   }
@@ -76,25 +78,26 @@ export class ArticleComponent implements OnInit {
           this.loadData();
         },
         error: (err: any) => {
-          alert(err.error?.detail);
+          this.utilsService.showDanger(err?.error?.detail);
         }
       })
     }, () => {});
   }
 
   deleteArticle(article: any): void {
-    const confirmation = confirm('Are you sure you want to delete this article?');
-    if (confirmation) {
-      this.articleService.deleteArticle(article.id).subscribe({
-        next: () => {
-          this.articles = this.articles.filter(item => article.idLocal !== item.idLocal)
-          alert('Article deleted successfully!');
-        },
-        error: (err: any) => {
-          alert(err.error?.detail);
-        }
-      })
-    }
+    this.utilsService.openModalConfirm('Are you sure you want to delete this article?').then((result) => {
+      if(result){
+        this.articleService.deleteArticle(article.id).subscribe({
+          next: () => {
+            this.articles = this.articles.filter(item => article.idLocal !== item.idLocal);
+            this.utilsService.showSuccess('Article deleted successfully!');
+          },
+          error: (err: any) => {
+            this.utilsService.showDanger(err?.error?.detail);
+          }
+        })
+      }
+    })
   }
 
   modifyArticle(article: any): void {
@@ -111,10 +114,11 @@ export class ArticleComponent implements OnInit {
           const currentIndex = this.articles.findIndex(item => item.idLocal === result.idLocal)
           if (currentIndex > -1) {
             this.articles[currentIndex] = result;
+            this.utilsService.showSuccess('The article has been updated successfully.');
           }
         },
         error: (err: any) => {
-          alert(err.error?.detail);
+          this.utilsService.showDanger(err?.error?.detail);
         }
       })
     }, () => {});

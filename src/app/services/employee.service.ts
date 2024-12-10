@@ -12,7 +12,7 @@ export class EmployeeService extends BaseService {
   }
 
   addEmployee(employee: any) {
-    return this.post('/employees', employee);
+    return this.post('/auth/signup', employee);
   }
 
   getEmployees(pagination: any) {

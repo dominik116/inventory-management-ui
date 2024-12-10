@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { UtilsService } from 'src/app/core/services/utils.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { ModalAddNotificationComponent } from 'src/app/shared/modal-add-notification/modal-add-notification.component';
@@ -14,20 +15,34 @@ export class HeaderComponent {
 
   user: any;
   countNotifications: number = 0;
+  rol: string = 'user';
 
   constructor(private readonly router: Router,
     private readonly authService: AuthService,
     private readonly modalService: NgbModal,
-    private readonly notificationsService: NotificationService
+    private readonly notificationsService: NotificationService,
+    private readonly utilsService: UtilsService
   ) { 
     this.user = this.authService.getDecodeToken();
-    this.loadCountNotifications();
+    this.authService.getRoles().subscribe((role) => {
+      this.rol = role;
+      this.loadCountNotifications();
+    })
   }
 
-  loadCountNotifications(){
-    this.notificationsService.getCountNotificationByUser(this.user.sub).subscribe((data: any)=>{
+  loadCountNotifications() {
+    const service = this.rol === 'admin' ? this.getCountNotification() : this.getCountNotificationByUser();
+    service.subscribe((data: any) => {
       this.countNotifications = data;
     });
+  }
+
+  getCountNotificationByUser() {
+    return this.notificationsService.getCountNotificationByUser(this.user.sub);
+  }
+
+  getCountNotification() {
+    return this.notificationsService.getCountNotification();
   }
 
   navigateToProfile() {
@@ -46,10 +61,10 @@ export class HeaderComponent {
       this.notificationsService.addNotification(this.user.sub, response).subscribe({
         next: (data: any) => {
           this.loadCountNotifications();
-          alert('The notification has been created successfully with ID ' +data.id + '.');
+          this.utilsService.showSuccess('The notification has been created successfully with ID ' +data.id + '.');
         },
         error: (err: any) => {
-          alert(err.error?.detail);
+          this.utilsService.showDanger(err?.error?.detail);
         }
       })
     }, () => {})

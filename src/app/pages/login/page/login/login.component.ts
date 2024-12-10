@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UtilsService } from 'src/app/core/services/utils.service';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -14,7 +15,8 @@ export class LoginComponent implements OnInit {
   showPass: boolean = false;
 
   submit: any;
-  constructor(private readonly router: Router, private authService: AuthService) {
+  constructor(private readonly router: Router, private authService: AuthService,
+    private readonly utilsService: UtilsService) {
     this.form = new FormGroup(
       {
         username: new FormControl(null, Validators.required),
@@ -37,7 +39,7 @@ export class LoginComponent implements OnInit {
           this.router.navigateByUrl('/inventory-management/articles');
         },
         error: (err: any) => {
-          alert(err.error.description);
+          this.utilsService.showDanger(err?.error?.description);
         }
       }
     );

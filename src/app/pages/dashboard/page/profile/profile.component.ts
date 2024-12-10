@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { UtilsService } from 'src/app/core/services/utils.service';
 import { EmployeeService } from 'src/app/services/employee.service';
 
 @Component({
@@ -16,7 +17,8 @@ export class ProfileComponent  {
   showPass: boolean = false;
 
   constructor(private readonly route: ActivatedRoute,
-    private readonly employeeService: EmployeeService
+    private readonly employeeService: EmployeeService,
+    private readonly utilsService: UtilsService
   ) {
     this.route.params.subscribe((data: any)=> {
       const username = data.id;
@@ -26,7 +28,7 @@ export class ProfileComponent  {
           this.form = this.buildForm();
         },
         error:(err: any) =>{
-            alert(err.error?.detail);
+          this.utilsService.showDanger(err?.error?.detail);
         }
       })
     })
@@ -49,17 +51,18 @@ export class ProfileComponent  {
       return;
     }
     const params = { ...this.form.getRawValue() };
-    const confirmation = confirm('Are you sure you want update this employee?');
-    if(confirmation){
-      this.employeeService.updateEmployee(this.employee.id, params).subscribe({
-        next: () => {
-          alert('Employee updated correctly');
-        },
-        error: (err: any) => {
-          alert(err.error?.detail);
-        }
-      })
-    }
+    this.utilsService.openModalConfirm('Are you sure you want update this employee?').then((result) => {
+      if(result){
+        this.employeeService.updateEmployee(this.employee.id, params).subscribe({
+          next: () => {
+            this.utilsService.showSuccess('Employee updated successfully.');
+          },
+          error: (err: any) => {
+            this.utilsService.showDanger(err?.error?.detail);
+          }
+        })
+      }
+    })
   }
 
   toggleShowPass(){

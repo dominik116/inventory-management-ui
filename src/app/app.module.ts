@@ -6,8 +6,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ShowForRolesDirective } from './core/directives/show-for-roles.directive';
 import { AuthInterceptor } from "./core/interceptors/auth.interceptor";
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
   declarations: [
@@ -20,7 +20,8 @@ import { AuthInterceptor } from "./core/interceptors/auth.interceptor";
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatTabsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true

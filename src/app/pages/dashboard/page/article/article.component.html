@@ -9,7 +9,7 @@
         <app-table [headers]="headers" [data]="articles || []" [pagination]="pagination" [pageSize]="pagination.size" (paginationChange)="pageChange($event)">
           <ng-template let-item>
             <button class="btn btn-primary me-2" (click)="modifyArticle(item)"><i class="fa fa-pencil-square-o"></i></button>
-            <button class="btn btn-danger" (click)="deleteArticle(item)"><i class="fa fa-trash"></i></button>
+            <button *appShowForRoles="[]" class="btn btn-danger" (click)="deleteArticle(item)"><i class="fa fa-trash"></i></button>
           </ng-template>
         </app-table>
       </div>

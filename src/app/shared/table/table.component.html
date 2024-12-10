@@ -10,8 +10,12 @@
     <tbody *ngIf="data.length > 0">
       <tr *ngFor="let item of data">
         <td *ngFor="let header of headers">
-            <ng-container *ngIf="header.value !== 'options'">
+            <ng-container *ngIf="header.value !== 'options' && !header.callback">
                 {{ item[header.value] }}
+            </ng-container>
+            <ng-container *ngIf="header.value !== 'options' && header.callback && header.type === 'BOOLEAN'">
+              <i *ngIf="header.callback(item)" class="fa fa-check-square"></i>
+              <i *ngIf="!header.callback(item)" class="fa fa-square-o"></i>
             </ng-container>
             <ng-container *ngIf="header.value === 'options'">
                 <div class="d-flex justify-content-start">

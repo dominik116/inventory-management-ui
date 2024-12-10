@@ -11,6 +11,7 @@ import { EmployeeComponent } from './page/employee/employee.component';
 import { HomeComponent } from './page/home/home.component';
 import { NotificationsComponent } from './page/notifications/notifications.component';
 import { ProfileComponent } from './page/profile/profile.component';
+import { DirectivesModule } from 'src/app/core/directives/directives/directives.module';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { ProfileComponent } from './page/profile/profile.component';
     ReactiveFormsModule,
     SharedModule,
     NgbModule,
-    NgbDropdownModule
+    NgbDropdownModule,
+    DirectivesModule
   ]
 })
 export class DashboardModule { }

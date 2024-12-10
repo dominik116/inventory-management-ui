@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { UtilsService } from 'src/app/core/services/utils.service';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { ModalAddEmployeeComponent } from 'src/app/shared/modal-add-employee/modal-add-employee.component';
 
@@ -20,7 +21,8 @@ export class EmployeeComponent implements OnInit {
   
   headers: any[] = [];
 
-  constructor(private employeeService: EmployeeService, private readonly modalService: NgbModal) {
+  constructor(private employeeService: EmployeeService, private readonly modalService: NgbModal,
+    private readonly utilsService: UtilsService) {
     this.createTableHeader();
   }
 
@@ -37,7 +39,7 @@ export class EmployeeComponent implements OnInit {
         this.mapData();
       },
       error: (err: any) => {
-        alert(err.error?.detail);
+        this.utilsService.showDanger(err?.error?.detail);
       }
     })
   }
@@ -74,25 +76,26 @@ export class EmployeeComponent implements OnInit {
           this.loadData();
         },
         error: (err: any) => {
-          alert(err.error?.detail);
+          this.utilsService.showDanger(err?.error?.detail);
         }
       })
     }, () => {});
   }
 
   deleteEmployee(employee: any): void {
-    const confirmation = confirm('Are you sure you want to delete this employee?');
-    if (confirmation) {
-      this.employeeService.deleteEmployee(employee.id).subscribe({
-        next: () => {
-          this.loadData();
-          alert('Employee deleted successfully!');
-        },
-        error: (err: any) => {
-          alert(err.error?.detail);
-        }
-      });
-    }
+    this.utilsService.openModalConfirm('Are you sure you want to delete this employee?').then((result) => {
+      if(result){
+        this.employeeService.deleteEmployee(employee.id).subscribe({
+          next: () => {
+            this.loadData();
+            this.utilsService.showSuccess('Employee deleted successfully!');
+          },
+          error: (err: any) => {
+            this.utilsService.showDanger(err?.error?.detail);
+          }
+        });
+      }
+    })
   }
 
   modifyEmployee(employee: any) {
@@ -109,10 +112,11 @@ export class EmployeeComponent implements OnInit {
           const currentIndex = this.employees?.findIndex(item => item.idLocal === result.idLocal)
           if (currentIndex > -1) {
             this.employees[currentIndex] = result;
+            this.utilsService.showSuccess('The employee has been updated successfully.');
           }
         },
         error: (err: any) => {
-          alert(err.error?.detail);          
+          this.utilsService.showDanger(err?.error?.detail);          
         }
       })
     }, () => {});
@@ -142,7 +146,14 @@ export class EmployeeComponent implements OnInit {
       },
       {
         key: 'Enabled',
-        value: 'enabled'
+        value: 'enabled',
+        type: 'BOOLEAN',
+        callback: (item: any) => {
+          if(item?.enabled){
+            return true;
+          }
+          return false;
+        }
       },
       {
         key: 'Actions',
