@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-modal-add-article',
@@ -17,12 +18,21 @@ export class ModalAddArticleComponent implements OnInit {
 
   submit: any;
 
-  constructor(public readonly modal: NgbActiveModal) {
+  admin: boolean = false;
+
+  maxQuantity: string = '0';
+
+  constructor(public readonly modal: NgbActiveModal, private readonly authService: AuthService) {
 
    }
 
   ngOnInit(): void {
-    this.buildForm();
+    this.authService.getRoles().subscribe((user) => {
+      if(user==='admin') {
+        this.admin = true;
+      }
+      this.buildForm();
+    })
   }
 
   addArticle() {
@@ -35,14 +45,18 @@ export class ModalAddArticleComponent implements OnInit {
     }
     this.modal.close(params);
   }
+
   
   buildForm() {
     this.form = new FormGroup({
       EAN: new FormControl({value: this.article?.EAN || null, disabled:this.edit}, Validators.required),
-      name: new FormControl(this.article?.name || null, Validators.required),
-      description: new FormControl(this.article?.description || null),
-      quantity: new FormControl(this.article?.quantity || 0, Validators.pattern('^[0-9]*$')),
-      price: new FormControl(this.article?.price || 0)
+      name: new FormControl({value: this.article?.name || null, disabled:!this.admin}, Validators.required),
+      description: new FormControl({value: this.article?.description || null, disabled:!this.admin}),
+      quantity: new FormControl(this.article?.quantity || 0, Validators.pattern(/^[0-9]*$/)),
+      price: new FormControl({value: this.article?.price || 0, disabled:!this.admin})
     });
+    if(!this.admin) {
+      this.maxQuantity = this.article.quantity.toString();
+    }
   }
 }

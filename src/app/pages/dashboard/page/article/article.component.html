@@ -1,15 +1,16 @@
-<div class="mx-3 bg-light" *ngIf="articles.length > 0">
-  <div>
+<div class="mx-3" *ngIf="articles.length > 0">
+  <div class="mt-2">
     <h3>Inventory Management</h3>
   </div>
   
     <div class="articles mt-10">
-      <button class="btn btn-success mb-3" (click)="addArticle()">Create article</button>
+      <button *appShowForRoles="[]" class="btn btn-success mb-3" (click)="addArticle()">Create article</button>
       <div class="border border-dark rounded-3 border-2">
         <app-table [headers]="headers" [data]="articles || []" [pagination]="pagination" [pageSize]="pagination.size" (paginationChange)="pageChange($event)">
           <ng-template let-item>
             <button class="btn btn-primary me-2" (click)="modifyArticle(item)"><i class="fa fa-pencil-square-o"></i></button>
             <button *appShowForRoles="[]" class="btn btn-danger" (click)="deleteArticle(item)"><i class="fa fa-trash"></i></button>
+            <span *ngIf="item?.quantity === 0" class="text-danger text-center fw-600 fw-bold border border-danger rounded-4">Out of stock</span>
           </ng-template>
         </app-table>
       </div>

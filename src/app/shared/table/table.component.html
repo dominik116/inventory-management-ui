@@ -1,36 +1,38 @@
-<table class="table table-striped">
-    <thead>
-      <tr>
-        <ng-container *ngFor="let header of headers">
-            <th *ngIf="header.value !== 'options'" [style]="{width: widthHead}">{{ header.key }}</th>
-            <th style="width: 10%;" *ngIf="header.value === 'options'">{{ header.key }}</th>
-        </ng-container>
-      </tr>
-    </thead>
-    <tbody *ngIf="data.length > 0">
-      <tr *ngFor="let item of data">
-        <td *ngFor="let header of headers">
-            <ng-container *ngIf="header.value !== 'options' && !header.callback">
-                {{ item[header.value] }}
-            </ng-container>
-            <ng-container *ngIf="header.value !== 'options' && header.callback && header.type === 'BOOLEAN'">
-              <i *ngIf="header.callback(item)" class="fa fa-check-square"></i>
-              <i *ngIf="!header.callback(item)" class="fa fa-square-o"></i>
-            </ng-container>
-            <ng-container *ngIf="header.value === 'options'">
-                <div class="d-flex justify-content-start">
-                    <ng-template [ngTemplateOutlet]="templateRef" [ngTemplateOutletContext]="{$implicit: item}"></ng-template>
-                </div>
-            </ng-container>
-        </td>
-      </tr>
-    </tbody>
-    <tbody *ngIf="data.length === 0">
-        <tr class="text-center">
-            <td><h3>No data</h3></td>
+<div class="table-responsive">
+  <table class="table table-striped">
+      <thead>
+        <tr>
+          <ng-container *ngFor="let header of headers">
+              <th *ngIf="header.value !== 'options'" [style]="{width: widthHead}">{{ header.key }}</th>
+              <th style="width: 10%;" *ngIf="header.value === 'options'">{{ header.key }}</th>
+          </ng-container>
         </tr>
-    </tbody>
-  </table>
+      </thead>
+      <tbody *ngIf="data.length > 0">
+        <tr *ngFor="let item of data" [class.stock]="item?.quantity === 0">
+          <td *ngFor="let header of headers">
+              <ng-container *ngIf="header.value !== 'options' && !header.callback">
+                  {{ item[header.value] }}
+              </ng-container>
+              <ng-container *ngIf="header.value !== 'options' && header.callback && header.type === 'BOOLEAN'">
+                <i *ngIf="header.callback(item)" class="fa fa-check-square"></i>
+                <i *ngIf="!header.callback(item)" class="fa fa-square-o"></i>
+              </ng-container>
+              <ng-container *ngIf="header.value === 'options'">
+                  <div class="d-flex justify-content-start">
+                      <ng-template [ngTemplateOutlet]="templateRef" [ngTemplateOutletContext]="{$implicit: item}"></ng-template>
+                  </div>
+              </ng-container>
+          </td>
+        </tr>
+      </tbody>
+      <tbody *ngIf="data.length === 0">
+          <tr class="text-center">
+              <td><h3>No data</h3></td>
+          </tr>
+      </tbody>
+    </table>
+</div>
   <div class="row px-3 pb-3" *ngIf="pagination && pagination.total > pageSize">
     <div class="col">
         <div class="container-pagination">

@@ -12,6 +12,7 @@ import { HomeComponent } from './page/home/home.component';
 import { NotificationsComponent } from './page/notifications/notifications.component';
 import { ProfileComponent } from './page/profile/profile.component';
 import { DirectivesModule } from 'src/app/core/directives/directives/directives.module';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { DirectivesModule } from 'src/app/core/directives/directives/directives.
     HomeComponent,
     HeaderComponent,
     ProfileComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    FooterComponent
   ],
   imports: [
     CommonModule,

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { EventService } from 'src/app/core/services/event.service';
 import { UtilsService } from 'src/app/core/services/utils.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { NotificationService } from 'src/app/services/notification.service';
@@ -21,7 +22,8 @@ export class HeaderComponent {
     private readonly authService: AuthService,
     private readonly modalService: NgbModal,
     private readonly notificationsService: NotificationService,
-    private readonly utilsService: UtilsService
+    private readonly utilsService: UtilsService,
+    private readonly eventService: EventService
   ) { 
     this.user = this.authService.getDecodeToken();
     this.authService.getRoles().subscribe((role) => {
@@ -62,6 +64,7 @@ export class HeaderComponent {
         next: (data: any) => {
           this.loadCountNotifications();
           this.utilsService.showSuccess('The notification has been created successfully with ID ' +data.id + '.');
+          this.eventService.actionReloadNotification(this.rol);
         },
         error: (err: any) => {
           this.utilsService.showDanger(err?.error?.detail);

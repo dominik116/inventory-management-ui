@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Subscription } from 'rxjs';
+import { EventService } from 'src/app/core/services/event.service';
 import { UtilsService } from 'src/app/core/services/utils.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { NotificationService } from 'src/app/services/notification.service';
@@ -11,7 +13,7 @@ import { ModalAddNotificationComponent } from 'src/app/shared/modal-add-notifica
   templateUrl: './notifications.component.html',
   styleUrls: ['./notifications.component.scss']
 })
-export class NotificationsComponent {
+export class NotificationsComponent implements OnDestroy {
 
   user: any;
   notifications: any = null;
@@ -20,12 +22,14 @@ export class NotificationsComponent {
   pagination : any;
   loading = true;
   rol: string = 'user';
+  reloadNotification!: Subscription;
 
   constructor(private readonly route: ActivatedRoute,
     private readonly notificationsService: NotificationService,
     private readonly modalService: NgbModal,
     private readonly authService: AuthService,
-    private readonly utilsService: UtilsService
+    private readonly utilsService: UtilsService,
+    private readonly eventService: EventService
   ) {
     this.route.params.subscribe((data: any) => {
       this.user = data.id;
@@ -35,6 +39,16 @@ export class NotificationsComponent {
         this.loadNotification();
       })
     })
+    this.reloadNotification = this.eventService.reloadNotification.subscribe((role) => {
+      if(role) {
+        this.rol = role;
+        this.loadNotification();
+      }
+    })
+   }
+
+   ngOnDestroy(): void {
+     this.reloadNotification.unsubscribe();
    }
 
    loadNotification() {

@@ -36,5 +36,14 @@ $inventory-management-theme: mat.define-light-theme((
 body {
     height: 100vh;
 }
+
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; overflow-x: hidden;}
+
+.role_disable {
+  background-color: #e9ecef;
+  color: #212529;
+  border: 1px solid #ced4da;
+  pointer-events: none;
+}

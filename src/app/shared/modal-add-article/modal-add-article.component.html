@@ -25,11 +25,12 @@
     
 
         <label for="quantity" class="form-label">Quantity</label>
-        <input type="number" min="0" id="quantity" formControlName="quantity" class="form-control"
-            [ngClass]="{'is-invalid': (form.get('quantity')?.invalid && (form.get('quantity')?.dirty || form.get('quantity')?.touched)) || (submit && form.get('quantity')?.invalid)}">
+        <input type="number" min="0" id="quantity" formControlName="quantity" class="form-control" [max]="maxQuantity || null"
+             [ngClass]="{'is-invalid': (form.get('quantity')?.invalid && (form.get('quantity')?.dirty || form.get('quantity')?.touched)) || (submit && form.get('quantity')?.invalid)}">
         <div *ngIf="(form.get('quantity')?.invalid && (form.get('quantity')?.dirty || form.get('quantity')?.touched)) || (submit && form.get('quantity')?.invalid)"
             class="invalid-feedback">
             <div *ngIf="form.get('quantity')?.errors?.['pattern']">Invalid format.</div>
+            <div *ngIf="form.get('quantity')?.errors?.['max']">You can only decrease stock.</div>
         </div>
 
         <label for="price" class="form-label">Price</label>

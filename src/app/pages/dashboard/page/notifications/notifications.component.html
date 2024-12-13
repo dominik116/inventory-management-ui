@@ -1,5 +1,5 @@
-<div class="mx-3 bg-light">
-    <div class="pt-2">
+<div class="mx-3">
+    <div class="mt-2">
       <h3>My notifications</h3>
     </div>
     <div *ngIf="loading">
@@ -18,8 +18,8 @@
                             <div class="row g-0">
                                 <div class="card-body p-0 h-100 position-relative overflow-hidden">
                                     <ng-container>
-                                        <span *ngIf="notification?.status === 'open'" class="mark_art_header bg-success text-white position-absolute fw-600">Open</span>
-                                        <span *ngIf="notification?.status === 'closed'" class="mark_art_header bg-danger text-white position-absolute fw-600">Closed</span>
+                                        <span *ngIf="notification?.status === 'open'" class="mark_header bg-success text-white position-absolute fw-600">Open</span>
+                                        <span *ngIf="notification?.status === 'closed'" class="mark_header bg-danger text-white position-absolute fw-600">Closed</span>
                                     </ng-container>
                                     <div class="card p-0 border-top-0 border-bottom-0 border-end-0 rounded-0 h-100">
                                         <div class="card-body">

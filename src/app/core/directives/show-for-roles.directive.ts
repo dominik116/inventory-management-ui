@@ -18,9 +18,9 @@ export class ShowForRolesDirective {
     this.allowedRoles?.push('admin');
     this.sub = this.authService.getRoles()
     .pipe(
-      map((user: string)=> Boolean(this.allowedRoles.includes(user))),
+      map((user: string) => Boolean(this.allowedRoles.includes(user))),
       distinctUntilChanged(),
-      tap((hasRole)=>{
+      tap((hasRole) => {
         hasRole ? this.viewContainerRef.createEmbeddedView(this.templateRef) : this.viewContainerRef.clear()
       })
     )
