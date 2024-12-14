@@ -1,3 +1,4 @@
+import { PlatformLocation } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -18,8 +19,10 @@ export class ModalAddEmployeeComponent implements OnInit {
   submit: any;
   showPass: boolean = false;
 
-  constructor(public readonly modal: NgbActiveModal) {
-
+  constructor(public readonly modal: NgbActiveModal, private readonly location: PlatformLocation) {
+    location.onPopState(() => {
+      this.modal.dismiss('dismiss');
+    });
    }
 
   ngOnInit(): void {

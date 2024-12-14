@@ -58,7 +58,7 @@
                         <div class="input-group">
                             <input [type]="showPass ? 'text' : 'password'" minlength="8" autocomplete="current-password" id="password" formControlName="password" class="form-control"
                             [ngClass]="{'is-invalid': (form.get('password')?.invalid && (form.get('password')?.dirty || form.get('password')?.touched)) || (submit && form.get('password')?.invalid)}">
-                            <button class="btn btn-secondary" (click)="toggleShowPass()">
+                            <button type="button" class="btn btn-secondary" (click)="toggleShowPass()">
                                 <i *ngIf="showPass" class="fa fa-eye"></i>
                                 <i *ngIf="!showPass" class="fa fa-eye-slash"></i>
                             </button>

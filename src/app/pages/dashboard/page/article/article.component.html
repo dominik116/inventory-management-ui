@@ -10,7 +10,7 @@
           <ng-template let-item>
             <button class="btn btn-primary me-2" (click)="modifyArticle(item)"><i class="fa fa-pencil-square-o"></i></button>
             <button *appShowForRoles="[]" class="btn btn-danger" (click)="deleteArticle(item)"><i class="fa fa-trash"></i></button>
-            <span *ngIf="item?.quantity === 0" class="text-danger text-center fw-600 fw-bold border border-danger rounded-4">Out of stock</span>
+            <span *ngIf="item?.quantity === 0" class="text-danger text-center fw-600 fw-bold border border-danger rounded-4 mx-2">Out of stock</span>
           </ng-template>
         </app-table>
       </div>

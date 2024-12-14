@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { PlatformLocation } from '@angular/common';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from 'src/app/services/auth.service';
@@ -20,11 +21,13 @@ export class ModalAddArticleComponent implements OnInit {
 
   admin: boolean = false;
 
-  maxQuantity: string = '0';
+  maxQuantity: string = '';
 
-  constructor(public readonly modal: NgbActiveModal, private readonly authService: AuthService) {
-
-   }
+  constructor(public readonly modal: NgbActiveModal, private readonly authService: AuthService, private readonly location: PlatformLocation) {
+    location.onPopState(() => {
+      this.modal.dismiss('dismiss');
+    });
+  }
 
   ngOnInit(): void {
     this.authService.getRoles().subscribe((user) => {
