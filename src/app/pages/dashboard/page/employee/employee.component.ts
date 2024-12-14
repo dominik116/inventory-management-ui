@@ -15,7 +15,7 @@ export class EmployeeComponent implements OnInit {
 
   pagination: any;
 
-  SIZE_PAGE = 5;
+  SIZE_PAGE = 1;
 
   pageNumber: number = 1;
   

@@ -13,7 +13,7 @@ export class ArticleComponent implements OnInit {
 
   articles: any[] = [];
 
-  SIZE_PAGE = 8;
+  SIZE_PAGE = 2;
 
   pagination: any;
 

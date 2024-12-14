@@ -16,12 +16,19 @@ import { ModalAddNotificationComponent } from 'src/app/shared/modal-add-notifica
 export class NotificationsComponent implements OnDestroy {
 
   user: any;
+  
   notifications: any = null;
-  SIZE_PAGE = 10;
+
+  SIZE_PAGE = 3;
+
   pageNumber: number = 1;
+
   pagination : any;
+
   loading = true;
+
   rol: string = 'user';
+  
   reloadNotification!: Subscription;
 
   constructor(private readonly route: ActivatedRoute,

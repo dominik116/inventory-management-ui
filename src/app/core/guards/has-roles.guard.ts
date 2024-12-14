@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
   providedIn: 'root'
 })
 export class HasRolesGuard implements CanActivate, CanLoad {
+
   user = new BehaviorSubject<any>(null);
 
   constructor(private readonly authService: AuthService,
@@ -21,14 +22,14 @@ export class HasRolesGuard implements CanActivate, CanLoad {
     return this.hasRole(route);
   }
 
-  private hasRole(route: Route | ActivatedRouteSnapshot){
+  private hasRole(route: Route | ActivatedRouteSnapshot) {
     const allowedRoles = route.data?.['allowedRoles'] || [];
     allowedRoles?.push('admin');
     return this.authService.getRoles()
     .pipe(
-      map((role: string)=> Boolean(allowedRoles.includes(role))),
+      map((role: string) => Boolean(allowedRoles.includes(role))),
       tap((hasRole) => {
-          if(!hasRole){
+          if(!hasRole) {
             this.router.navigate(['']);
             localStorage.removeItem('token');
           }

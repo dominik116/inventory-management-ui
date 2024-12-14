@@ -5,7 +5,6 @@
       <ng-template [ngIf]="isTemplate(toast)" [ngIfElse]="text">
         <ng-template [ngTemplateOutlet]="toast.textOrTpl"></ng-template>
       </ng-template>
-  
       <ng-template #text>{{ toast.text }}</ng-template>
     </ngb-toast>
 </div>

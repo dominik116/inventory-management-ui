@@ -22,15 +22,15 @@ export class UtilsService {
     return modal.result.then((result: any) => Promise.resolve(result), (reason: any) => { });
   }
 
-  showSuccess(msg: string){
+  showSuccess(msg: string) {
     this.show(msg, { classname: 'bg-primary text-light', delay: 10000 });
   }
 
-  showDanger(msg: string){
+  showDanger(msg: string) {
     this.show(msg, { classname: 'bg-danger text-light', delay: 5000 });
   }
 
-  show(text: string, options: any){
+  show(text: string, options: any) {
     this.toasts.push({ text, ...options });
   }
 
