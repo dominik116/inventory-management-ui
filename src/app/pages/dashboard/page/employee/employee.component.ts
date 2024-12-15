@@ -36,6 +36,8 @@ export class EmployeeComponent implements OnInit {
       next: (data: any) => {
         this.employees = data?.content || [];
         this.pagination.total = data.total;
+        this.pagination.size = data.size;
+        this.pagination.page = data.page;
         this.mapData();
       },
       error: (err: any) => {
@@ -74,6 +76,7 @@ export class EmployeeComponent implements OnInit {
       this.employeeService.addEmployee(result).subscribe({
         next: (data: any) => {
           this.loadData();
+          this.utilsService.showSuccess('The employee has been created successfully with ID ' + data.id + '.');
         },
         error: (err: any) => {
           this.utilsService.showDanger(err?.error?.detail);
@@ -84,9 +87,10 @@ export class EmployeeComponent implements OnInit {
 
   deleteEmployee(employee: any): void {
     this.utilsService.openModalConfirm('Are you sure you want to delete this employee?').then((result) => {
-      if(result){
+      if(result) {
         this.employeeService.deleteEmployee(employee.id).subscribe({
           next: () => {
+            this.pagination = this.getPagination();
             this.loadData();
             this.utilsService.showSuccess('Employee deleted successfully!');
           },

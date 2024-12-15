@@ -1,7 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Subscription } from 'rxjs';
+import { Subscription, switchMap } from 'rxjs';
 import { EventService } from 'src/app/core/services/event.service';
 import { UtilsService } from 'src/app/core/services/utils.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -29,7 +29,7 @@ export class NotificationsComponent implements OnDestroy {
 
   rol: string = 'user';
   
-  reloadNotification!: Subscription;
+  private subscriptions: Subscription = new Subscription();
 
   constructor(private readonly route: ActivatedRoute,
     private readonly notificationsService: NotificationService,
@@ -38,24 +38,35 @@ export class NotificationsComponent implements OnDestroy {
     private readonly utilsService: UtilsService,
     private readonly eventService: EventService
   ) {
-    this.route.params.subscribe((data: any) => {
-      this.user = data.id;
-      this.pagination = this.getPagination();
-      this.authService.getRoles().subscribe((role) => {
+    this.init();
+   }
+
+   private init() {
+    this.subscriptions.add(
+      this.route.params.pipe(
+        switchMap((data: any) => {
+          this.user = data.id;
+          this.pagination = this.getPagination();
+          return this.authService.getRoles();
+        })
+      ).subscribe((role: string) => {
         this.rol = role;
         this.loadNotification();
       })
-    })
-    this.reloadNotification = this.eventService.reloadNotification.subscribe((role) => {
-      if(role) {
-        this.rol = role;
-        this.loadNotification();
-      }
-    })
-   }
+    );
+
+    this.subscriptions.add(
+      this.eventService.reloadNotification.subscribe((role: string) => {
+        if (role) {
+          this.rol = role;
+          this.loadNotification();
+        }
+      })
+    );
+  }
 
    ngOnDestroy(): void {
-     this.reloadNotification.unsubscribe();
+     this.subscriptions.unsubscribe();
    }
 
    loadNotification() {
@@ -63,7 +74,7 @@ export class NotificationsComponent implements OnDestroy {
     const service = this.rol === 'admin' ? this.getAllNotifications() : this.getNotificationsByUser();
     service.subscribe({
       next: (data: any) => {
-        this.notifications = data?.content || null;
+        this.notifications = data?.content || [];
         this.pagination.page = data.page;
         this.pagination.size = data.size;
         this.pagination.total = data.total;
@@ -123,7 +134,7 @@ export class NotificationsComponent implements OnDestroy {
           const currentIndex = this.notifications?.findIndex((item: any) => item.idLocal === response.idLocal);
           if(currentIndex > -1) {
             this.notifications[currentIndex].message = response?.message;
-            this.utilsService.showSuccess('The notification has been updated successfully with ID ' +data.id + '.');
+            this.utilsService.showSuccess('The notification has been updated successfully with ID ' + data.id + '.');
           }
         },
         error: (err: any) => {
@@ -142,10 +153,10 @@ export class NotificationsComponent implements OnDestroy {
         this.notificationsService.closeNotification(item.id, params).subscribe({
           next: () => {
             const currentIndex = this.notifications?.findIndex((el: any) => el.idLocal === item.idLocal);
-            if(currentIndex > -1){
+            if(currentIndex > -1) {
               this.notifications[currentIndex].status = 'closed';
               this.loadNotification();
-              this.utilsService.showSuccess('The notification has been closed successfully with ID ' +item.id + '.');
+              this.utilsService.showSuccess('The notification has been closed successfully with ID ' + item.id + '.');
             }
           },
           error: (err: any) => {

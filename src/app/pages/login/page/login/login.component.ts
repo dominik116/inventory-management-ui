@@ -40,13 +40,13 @@ export class LoginComponent implements OnInit {
           this.router.navigateByUrl('/inventory-management/articles');
         },
         error: (err: any) => {
-          this.utilsService.showDanger(err?.error?.description);
+          this.utilsService.showDanger(err?.error?.detail);
         }
       }
     );
   }
 
-  toggleShowPass(){
+  toggleShowPass() {
     this.showPass = !this.showPass;
   }
 }

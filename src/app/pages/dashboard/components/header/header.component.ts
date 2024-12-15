@@ -63,7 +63,7 @@ export class HeaderComponent {
       this.notificationsService.addNotification(this.user.sub, response).subscribe({
         next: (data: any) => {
           this.loadCountNotifications();
-          this.utilsService.showSuccess('The notification has been created successfully with ID ' +data.id + '.');
+          this.utilsService.showSuccess('The notification has been created successfully with ID ' + data.id + '.');
           this.eventService.actionReloadNotification(this.rol);
         },
         error: (err: any) => {

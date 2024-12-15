@@ -46,7 +46,7 @@ export class ModalAddEmployeeComponent implements OnInit {
       name: new FormControl(this.employee?.name || null, Validators.required),
       surname: new FormControl(this.employee?.surname || null, Validators.required),
       nif: new FormControl(this.employee?.nif || null, [Validators.required, Validators.maxLength(9)]),
-      email: new FormControl(this.employee?.email || null, Validators.required),
+      email: new FormControl(this.employee?.email || null, [Validators.pattern(/@/), Validators.required]),
       enabled: new FormControl(this.employee?.enabled || false),
       password: new FormControl(null, [Validators.pattern(/^(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/), Validators.required])
     });

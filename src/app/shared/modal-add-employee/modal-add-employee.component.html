@@ -58,6 +58,7 @@
                 <input type="text" id="email" formControlName="email" class="form-control" [ngClass]="{'is-invalid': (form.get('email')?.invalid && (form.get('email')?.dirty || form.get('email')?.touched)) || (submit && form.get('email')?.invalid)}">
                 <div *ngIf="(form.get('email')?.invalid && (form.get('email')?.dirty || form.get('email')?.touched)) || (submit && form.get('email')?.invalid)"
                     class="invalid-feedback">
+                    <div *ngIf="form.get('email')?.errors?.['pattern']">Email must contain the &#64; symbol.</div>
                     <div *ngIf="form.get('email')?.errors?.['required']">Field cannot be empty.</div>
                 </div>
             </div>

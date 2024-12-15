@@ -25,16 +25,16 @@ export class ModalAddNotificationComponent implements OnInit {
     this.buildForm();
   }
 
-  buildForm(){
+  buildForm() {
     this.form = new FormGroup({
       subject: new FormControl({value: this.notification?.subject || null, disabled: this.edit}, Validators.required),
       message: new FormControl(this.notification?.message || null, Validators.required)
     });
   }
 
-  addNotification(){
+  addNotification() {
     this.submit = true;
-    if(this.form.invalid){
+    if(this.form.invalid) {
       return;
     }
     const params = { ...this.form.getRawValue() };

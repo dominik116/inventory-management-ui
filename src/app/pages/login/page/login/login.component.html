@@ -1,7 +1,7 @@
 <div class="container_login">
     <div class="login">
         <h1>Inventory Management Access</h1>
-        <form novalidate [formGroup]="form" class="needs-validation">
+        <form novalidate [formGroup]="form" class="needs-validation" (ngSubmit)="validateUser()">
             <div class="mb-3 row">
                 <div class="col col-md-12">
                     <input class="form-control" type="text" placeholder="Username" formControlName="username"
@@ -27,10 +27,9 @@
                         </div>
                     </div>
                 </div>
-
             </div>
             <div class="text-center">
-                <button type="submit" class="btn btn-primary btn-block btn-large fw-bold" (click)="validateUser()">Let me in</button>
+                <button type="submit" class="btn btn-primary btn-block btn-large fw-bold">Let me in</button>
             </div>
         </form>
     </div>

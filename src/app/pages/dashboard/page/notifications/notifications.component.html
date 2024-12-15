@@ -10,7 +10,7 @@
         </div>
     </div>
     <div *ngIf="!loading">
-        <ng-container *ngIf="notifications; else elseBlock">
+        <ng-container *ngIf="notifications?.length > 0; else elseBlock">
             <div class="d-flex me-2 flex-wrap">
                 <div class="col-sm-12 col-md-4 p-2" *ngFor="let notification of notifications">
                     <div class="border border-secondary border-2 rounded-3">

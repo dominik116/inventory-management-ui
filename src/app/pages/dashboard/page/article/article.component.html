@@ -1,10 +1,10 @@
-<div class="mx-3" *ngIf="articles.length > 0">
+<div class="mx-3">
   <div class="mt-2">
     <h3>Inventory Management</h3>
   </div>
   
-    <div class="articles mt-10">
-      <button *appShowForRoles="[]" class="btn btn-success mb-3" (click)="addArticle()">Create article</button>
+  <button *appShowForRoles="[]" class="btn btn-success mb-3" (click)="addArticle()">Create article</button>
+    <div class="articles mt-10" *ngIf="articles.length > 0; else elseBlock">
       <div class="border border-dark rounded-3 border-2">
         <app-table [headers]="headers" [data]="articles || []" [pagination]="pagination" [pageSize]="pagination.size" (paginationChange)="pageChange($event)">
           <ng-template let-item>
@@ -15,4 +15,9 @@
         </app-table>
       </div>
     </div>
-  </div>
+    <ng-template #elseBlock>
+      <div class="alert alert-secondary" role="alert">
+          There are no articles.
+      </div>
+  </ng-template>
+</div>

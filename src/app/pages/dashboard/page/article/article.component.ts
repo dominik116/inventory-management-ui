@@ -74,8 +74,9 @@ export class ArticleComponent implements OnInit {
     });
     modal.result.then((result: any) => {
       this.articleService.addArticle(result).subscribe({
-        next: () => {
+        next: (data: any) => {
           this.loadData();
+          this.utilsService.showSuccess('The article has been created successfully with ID ' + data.id + '.');
         },
         error: (err: any) => {
           this.utilsService.showDanger(err?.error?.detail);
@@ -86,10 +87,11 @@ export class ArticleComponent implements OnInit {
 
   deleteArticle(article: any): void {
     this.utilsService.openModalConfirm('Are you sure you want to delete this article?').then((result) => {
-      if(result){
+      if(result) {
         this.articleService.deleteArticle(article.id).subscribe({
           next: () => {
-            this.articles = this.articles.filter(item => article.idLocal !== item.idLocal);
+            this.pagination = this.getPagination();
+            this.loadData();
             this.utilsService.showSuccess('Article deleted successfully!');
           },
           error: (err: any) => {
